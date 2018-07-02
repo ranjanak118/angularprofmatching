@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
@@ -19,14 +20,14 @@
 <form name="myForm" novalidate>
 
     <h4>username:</h4>
-        <input type="text" name="username" ng-model="username" placeholder="Enter Username" required>
-        <span style="color:red" ng-show="myForm.username.$dirty && myForm.username.$invalid">
+    <input type="text" name="username" ng-model="username" placeholder="Enter Username" required>
+    <span style="color:red" ng-show="myForm.username.$dirty && myForm.username.$invalid">
             <span ng-show="myForm.username.$error.required">Username is Required.</span>
         </span>
 
     <h4>Email:</h4>
-        <input type="email" name="email" ng-model="email" placeholder="Enter Email Address" required>
-        <span style="color:red" ng-show="myForm.email.$dirty && myForm.email.$invalid">
+    <input type="email" name="email" ng-model="email" placeholder="Enter Email Address" required>
+    <span style="color:red" ng-show="myForm.email.$dirty && myForm.email.$invalid">
             <span ng-show="myForm.email.$error.required">Email is Required.</span>
             <span ng-show="myForm.email.$error.email">Invalid email address.</span>
         </span>
@@ -40,8 +41,10 @@
 
     <br>
     <p>
-        <input type="submit" ng-click="myFunction()"
-        ng-disabled="myForm.username.$dirty && myForm.username.$invalid || myForm.email.$dirty && myForm.email.$invalid">
+        <button type="button" ng-click="myFunction1()"
+                ng-disabled="myForm.username.$dirty && myForm.username.$invalid || myForm.email.$dirty && myForm.email.$invalid">Submit(if student)</button>
+        <button type="button" ng-click="myFunction2()"
+                ng-disabled="myForm.username.$dirty && myForm.username.$invalid || myForm.email.$dirty && myForm.email.$invalid">Submit(if professor)</button>
     </p>
 
 </form>
@@ -51,12 +54,28 @@
         $scope.username = "";
         $scope.email = "";
         $scope.password = "";
-        $scope.myFunction = function(){
+        $scope.myFunction1 = function(){
             var data = JSON.stringify({"username": $scope.username, "email": $scope.email, "password": $scope.password});
             console.log(data);
             $http({
                 method: "POST",
                 url: "http://ieeeprofmatch-test.us-east-1.elasticbeanstalk.com/AuthReg/register/student/",
+                data: data ,
+                contentType: "application/json"
+            }).then(function mySuccess(response) {
+                $scope.content = response.data;
+                console.log(response);
+            }, function myError(response) {
+                $scope.content = response.statusText;
+                console.log(response);
+            });
+        };
+        $scope.myFunction2 = function(){
+            var data = JSON.stringify({"username": $scope.username, "email": $scope.email, "password": $scope.password});
+            console.log(data);
+            $http({
+                method: "POST",
+                url: "http://ieeeprofmatch-test.us-east-1.elasticbeanstalk.com/AuthReg/register/prof/",
                 data: data ,
                 contentType: "application/json"
             }).then(function mySuccess(response) {

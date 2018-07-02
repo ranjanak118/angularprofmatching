@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <title>PROFESSOR MATCHING</title>
 </head>
-<body><h1><mark><i>STUDENT DETAILS</i></mark></h1>
+<body ng-app="myApp" ng-controller="studDetails">
+<h1><mark><i>STUDENT DETAILS</i></mark></h1>
 <style>
     input{
         background-color: lightblue;
@@ -15,16 +16,16 @@
         <form class="myForm" name="detailsForm">
             <h3 class="text-center form-group"><mark>Student Basic Information</mark></h3>
             <div class="form-group">
-                <h4>Username:</h4>
+                <h4>username:</h4>
                 <input class="form-group" name="username" type="text" ng-model="username" placeholder="Enter username" required>
                 <span style="color:red">This is Required</span>
             </div>
             <div class="form-group">
-                <h4>Firstname:</h4>
+                <h4>firstName:</h4>
                 <input class="form-group" name="firstName" type="text" ng-model="firstName" placeholder="Enter FirstName">
             </div>
             <div class="form-group">
-                <h4>Lastname:</h4>
+                <h4>lastName:</h4>
                 <input class="form-group" name="lastName" type="text" ng-model="lastName" placeholder="Enter lastName">
             </div>
             <div class="form-group">
@@ -148,8 +149,63 @@
             <div class="form-group">
                 <h4>Hobbies:</h4>
                 <input class="form-group" name="hobbies" type="text" ng-model="hobbies" placeholder="Enter Hobbies">
-            </div>
+            </div><br>
+            <input type="submit" ng-click="myFunction()">
+        </form>
     </div>
 </div>
+<script>
+   var app = angular.module('myApp',[]);
+    app.controller('studDetails', function($scope , $http){
+        $scope.username="";
+        $scope.firstName="";
+        $scope.lastName="";
+        $scope.state="";
+        $scope.city="";
+        $scope.gender="";
+        $scope.age="";
+        $scope.mobileNo="";
+        $scope.cgpa="";
+        $scope.yearOfStudy="";
+        $scope.branch="";
+        $scope.institute="";
+        $scope.organisation="";
+        $scope.duration="";
+        $scope.description="";
+        $scope.organisation="";
+        $scope.duration="";
+        $scope.description="";
+        $scope.title="";
+        $scope.referenceNo="";
+        $scope.collabs="";
+        $scope.mentors="";
+        $scope.journal="";
+        $scope.numCitations="";
+        $scope.title="";
+        $scope.provider="";
+        $scope.year="";
+        $scope.title="";
+        $scope.Description="";
+        $scope.areas="";
+        $scope.keywords="";
+        $scope.hobbies="";
+        $scope.myFunction = function() {
+            var data = JSON.stringify({"username": $scope.username, "firstname": $scope.firstName, "lastname": $scope.lastName, ""});
+            console.log(data);
+            $http({
+                method: "GET",
+                url: "http://ieeeprofmatch-test.us-east-1.elasticbeanstalk.com/studentBasic/crud/{username}/",
+                data: data,
+                contentType: "application/json"
+            }).then(function mySuccess(response) {
+                $scope.content = response.data;
+                console.log(response);
+            }, function myError(response) {
+                $scope.content = response.statusText;
+                console.log(response);
+            });
+        };
+    });
+</script>
 </body>
 </html>
