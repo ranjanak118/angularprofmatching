@@ -8,7 +8,7 @@
 
 </head>
 <body ng-app="myApp" ng-controller="validateCtrl">
-<h1><mark><i>LOGIN IN</i></mark></h1>
+<h1><mark><i>LOG IN</i></mark></h1>
 <style>
     input.ng-invalid {
         background-color:lightblue;
@@ -50,7 +50,7 @@
 </form>
 <script>
     var app = angular.module('myApp', []);
-    app.controller('validateCtrl', function($scope , $http){
+    app.controller('validateCtrl', function($scope , $http , $window){
         $scope.username = "";
         $scope.email = "";
         $scope.password = "";
@@ -65,6 +65,7 @@
             }).then(function mySuccess(response) {
                 $scope.content = response.data;
                 console.log(response);
+                $window.localStorage.setItem("token" , response.data.token);
             }, function myError(response) {
                 $scope.content = response.statusText;
                 console.log(response);
@@ -81,6 +82,7 @@
             }).then(function mySuccess(response) {
                 $scope.content = response.data;
                 console.log(response);
+                $window.localStorage.setItem("token" , response.data.token);
             }, function myError(response) {
                 $scope.content = response.statusText;
                 console.log(response);

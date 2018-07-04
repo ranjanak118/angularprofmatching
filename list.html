@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <title>PROFESSOR MATCHING</title>
+</head>
+<body ng-app="myApp" ng-controller="studentList">
+<h1>STUDENT LIST</h1>
+<table>
+    <tr ng-repeat="x in studentList">
+        <td>{{x.username}}</td>
+    </tr>
+</table>
+<script>
+    var app=angular.module('myApp',[]);
+    app.controller('studentList',function($scope , $http){
+        $scope.studentList = {};
+        $http({
+            method:"GET",
+            url:" http://ieeeprofmatch-test.us-east-1.elasticbeanstalk.com/studentList/get/" + $scope.username + '/',
+            headers:{"authorization":"Token " + localStorage.getItem("token")},
+            contentType:"application/json"
+        }).then(function mySuccess(response){
+            $scope.content=response.data;
+            console.log(response);
+        }, function myError(response) {
+            $scope.content = response.statusText;
+            console.log(response);
+        });
+    });
+</script>
+</body>
+</html>
