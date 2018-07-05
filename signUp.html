@@ -7,8 +7,8 @@
     <title>PROFESSOR MATCHING</title>
 
 </head>
-<body ng-app="myApp" ng-controller="validateCtrl">
-<h1><mark><i>LOG IN</i></mark></h1>
+<body ng-app="myApp" ng-controller="signUp">
+<h1><mark><i>SIGN UP</i></mark></h1>
 <style>
     input.ng-invalid {
         background-color:lightblue;
@@ -50,7 +50,7 @@
 </form>
 <script>
     var app = angular.module('myApp', []);
-    app.controller('validateCtrl', function($scope , $http , $window){
+    app.controller('signUp', function($scope , $http , $window , $state){
         $scope.username = "";
         $scope.email = "";
         $scope.password = "";
@@ -66,6 +66,7 @@
                 $scope.content = response.data;
                 console.log(response);
                 $window.localStorage.setItem("token" , response.data.token);
+                $state.go('studDetails');
             }, function myError(response) {
                 $scope.content = response.statusText;
                 console.log(response);
@@ -83,6 +84,7 @@
                 $scope.content = response.data;
                 console.log(response);
                 $window.localStorage.setItem("token" , response.data.token);
+                $state.go('profDetails');
             }, function myError(response) {
                 $scope.content = response.statusText;
                 console.log(response);

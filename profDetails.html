@@ -106,7 +106,7 @@
  </div>
 <script>
     var app = angular.module('myApp', []);
-    app.controller('profDetails',function($scope , $http){
+    app.controller('profDetails',function($scope , $http , $state){
         $scope.username="";
         $scope.firstName="";
         $scope.lastName="";
@@ -173,6 +173,7 @@
                 }).then(function mySuccess(response) {
                 $scope.content = response.data;
                 console.log(response);
+                $state.go('studentList')
             }, function myError(response) {
                 $scope.content = response.statusText;
                 console.log(response);
